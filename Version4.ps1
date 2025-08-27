@@ -44,6 +44,16 @@ function Write-Log {
     $logMessage | Out-File -FilePath $LogFile -Append -Encoding utf8
 }
 
+# === CONDITION HORAIRE (23h00-01h00) ===
+$now   = Get-Date
+$start = [datetime]::Today.AddHours(23)   # 23h
+$end   = [datetime]::Today.AddDays(1).AddHours(1) #1h du matin
+
+if ($now -lt $start -or $now -ge $end) {
+    Write-Log "Script ignoré : hors de la fenêtre horaire (02h00-03h00)." "Yellow"
+    exit 0
+}
+
 # Fonction robuste de suppression pour éviter "directory is not empty"
 function Remove-FolderRobust {
     param(
