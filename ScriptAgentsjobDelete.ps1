@@ -77,6 +77,8 @@ function Remove-FolderRobust {
 
     # Tentatives multiples avec PowerShell
     $maxAttempts = 3
+    Write-Log "Pause 5 secondes avant la suppression du dossier $Path..."
+    Start-Sleep -Seconds 5
     for ($i = 1; $i -le $maxAttempts; $i++) {
         try {
             Remove-Item -Path $Path -Recurse -Force -ErrorAction Stop
